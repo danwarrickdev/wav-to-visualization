@@ -12,7 +12,8 @@ import pandas as pd
 warnings.simplefilter("ignore", category=UserWarning)
 
 
-def generate_spectrogram(file_path, sample_size, channels):
+def generate_spectrogram(file_path, sample_size, channels, graph_type):
+    print(graph_type)
     # Read audio file
     data = read_audio_file(file_path)
     # Get audio file data - mono/stereo, encoding, length
@@ -22,7 +23,7 @@ def generate_spectrogram(file_path, sample_size, channels):
     # Get subset to graph?
     subset = get_data_by_range(parsed, center, sample_size)
     # Graph
-    graph_data(subset)
+    graph_data(subset, graph_type)
 
 
 def read_audio_file(filename):
@@ -61,7 +62,7 @@ def get_data_by_range(data, center, range):
     return data[lower_bound:upper_bound]
 
 
-def graph_data(data):
+def graph_data(data, graph_type):
     x = [i[0] for i in data]
     y = [i[1] for i in data]
     df = pd.DataFrame({"x": x, "y": y})
@@ -70,7 +71,8 @@ def graph_data(data):
         data=df,
         x="x",
         y="y",
-        kind="hex",
+        # “scatter” | “kde” | “hist” | “hex” | “reg” | “resid” 
+        kind=graph_type,
         color="black",
     )
     plt.show()
