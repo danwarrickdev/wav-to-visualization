@@ -13,7 +13,6 @@ warnings.simplefilter("ignore", category=UserWarning)
 
 
 def generate_spectrogram(file_path, sample_size, channels, graph_type):
-    print(graph_type)
     # Read audio file
     data = read_audio_file(file_path)
     # Get audio file data - mono/stereo, encoding, length
@@ -71,7 +70,6 @@ def graph_data(data, graph_type):
         data=df,
         x="x",
         y="y",
-        # “scatter” | “kde” | “hist” | “hex” | “reg” | “resid” 
         kind=graph_type,
         color="black",
     )
